@@ -9,6 +9,8 @@
 angular/node_modules
 express/node_modules
 
+express/data.json
+
 *.mp3
 
 # IDEs and editors
