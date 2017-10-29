@@ -1,19 +1,21 @@
-import { MOVING_AVERAGE, movingAverage } from './indicators';
+var MOVING_AVERAGE = require('./indicators.ts').MOVING_AVERAGE;
+var movingAverage = require('./indicators.ts').movingAverage;
 
 var data = [];
 var indicatorArray = [];
 
-export function addEntry(entry) {
-    data.push(entry);
+module.exports.addEntry = function(entry) {
+    console.log("New entry:", entry);
+    data.push(entry.rate);
 
     indicatorArray.forEach((ind) => {
         var value = ind.run(data);
         ind.data.push(value);
-        console.log(ind.name, ind.value);
+        console.log(ind.name, value);
     });
 }
 
-export function addIndicator(name, ...param) {
+module.exports.addIndicator = function(name, ...param) {
     console.log("adding", name, param);
     var run;
     switch(name) {

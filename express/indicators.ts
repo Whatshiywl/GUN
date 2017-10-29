@@ -1,16 +1,16 @@
-import * as _ from 'lodash';
+var _ = require('lodash');
 
-export const MOVING_AVERAGE = "MA";
-export const RSI = "RSI";
+module.exports.MOVING_AVERAGE = "MA";
+module.exports.RSI = "RSI";
 
-export function movingAverage(...param) {
+module.exports.movingAverage = function(...param) {
     var period = param[0][0];
     var type = param[0][1];
 
     console.log("Creating", type, "moving average with period", period);
 
     var iter = function(acc, val, i, col) {
-        console.log(acc);
+        // console.log(acc);
         var n = col.length;
         var sum;
         switch(type) {
@@ -31,10 +31,12 @@ export function movingAverage(...param) {
     }
 
     return function(history) {
-        var sample = _.slice(history, history.length-period);
-        console.log("sample is", sample);
-        var result = _.reduce(sample, iter);
-        console.log("result is", result);
+        let start = history.length-period;
+        if(start < 0) start = 0;
+        var sample = _.slice(history, start);
+        // console.log("sample is", sample);
+        var result = _.reduce(sample, iter, 0);
+        // console.log("result is", result);
         return result;
     }
 }

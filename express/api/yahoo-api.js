@@ -6,8 +6,17 @@ var https = require("https");
  * @param options: http options object
  * @param callback: callback to pass the results JSON object(s) back
  */
-exports.getJSON = function(options, onResult)
+exports.getJSON = function(from, to, onResult)
 {
+    var options = {
+      host: "query.yahooapis.com",
+      port: 443,
+      path: "/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22"+from+to+"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=",
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/JSON'
+      }
+    };
     // console.log(options.host+options.path+":"+options.port);
 
     var port = options.port == 443 ? https : http;
